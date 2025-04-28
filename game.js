@@ -9,10 +9,11 @@ const minNeighbors = 3; // Mínimo de vizinhos para sobreviver
 const maxNeighbors = 8; // Máximo de vizinhos para morrer de super lotação
 const reproduction = 3; // Mínimo de vizinhos para se reproduzir em um espaço vazio
 const minFood = 1; // Mínimo de comida para sobreviver sozinho
-const minInfection = 6; // Mínimo de vizinhos para sobreviver a uma infecção
+const minInfection = 3; // Mínimo de vizinhos para sobreviver a uma infecção
 const foodPerTurn = 2; // Número de comida que surge a cada atualização
 const enemyPerTurn = 5; // Número de inimigos que surge a cada atualização
-const initialSpawn = 2 // 2 - Apenas vida, 3 - Vida e comida, 4 - Vida, comida e inimigos
+const initialSpawn = 2; // 2 - Apenas vida, 3 - Vida e comida, 4 - Vida, comida e inimigos
+const timing = 500; // Intervalo de tempo entre atualizações
 
 let grid = createGrid();
 
@@ -70,8 +71,10 @@ function updateGrid() {
       } else if (grid[y][x] === 3) {
         if (neighbors.length > 0 && neighbors.length <= minInfection) {
           neighbors.forEach((n) => {
-            grid[n.y][n.x] = 3;
+            newGrid[n.y][n.x] = 3; // Infecção
           });
+        } else {
+          newGrid[y][x] = 0; // Elimina a infecção
         }
       } else {
         if (neighbors.length === reproduction) {
@@ -139,15 +142,19 @@ function spawnEnemy(count) {
 }
 
 function loop() {
-  spawnFood(foodPerTurn);
-  spawnEnemy(enemyPerTurn);
-  drawGrid();
-  updateGrid();
-  if (isGameOver()) {
-    alert("Game over!");
-    grid = createGrid();
-  }
-  requestAnimationFrame(loop);
+  const interval = setInterval(() => {
+    spawnFood(foodPerTurn);
+    spawnEnemy(enemyPerTurn);
+    drawGrid();
+    updateGrid();
+    
+    if (isGameOver()) {
+      clearInterval(interval);
+      alert("Game over!");
+      grid = createGrid();
+      loop();
+    }
+  }, timing);
 }
 
 loop();
