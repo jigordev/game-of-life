@@ -5,19 +5,7 @@ const cellSize = 10;
 const rows = canvas.height / cellSize;
 const cols = canvas.width / cellSize;
 
-const minNeighbors = 3; // Mínimo de vizinhos para sobreviver
-const maxNeighbors = 8; // Máximo de vizinhos para morrer de super lotação
-const reproduction = 3; // Mínimo de vizinhos para se reproduzir em um espaço vazio
-const minFood = 1; // Mínimo de comida para sobreviver sozinho
-const minInfection = 3; // Mínimo de vizinhos para sobreviver a uma infecção
-const foodPerTurn = 2; // Número de comida que surge a cada atualização
-const enemyPerTurn = 5; // Número de inimigos que surge a cada atualização
-const initialSpawn = 2; // 2 - Apenas vida, 3 - Vida e comida, 4 - Vida, comida e inimigos
-const timing = 500; // Intervalo de tempo entre atualizações
-
-let grid = createGrid();
-
-function createGrid() {
+function createGrid(initialSpawn) {
   return Array.from({ length: rows }, () =>
     Array.from({ length: cols }, () => Math.floor(Math.random() * initialSpawn))
   );
@@ -53,7 +41,7 @@ function isGameOver() {
   return count === 0;
 }
 
-function updateGrid() {
+function updateGrid(minNeighbors, maxNeighbors, reproduction, minFood, minInfection) {
   const newGrid = grid.map(arr => [...arr]);
 
   for (let y = 0; y < rows; y++) {
@@ -141,20 +129,32 @@ function spawnEnemy(count) {
   }
 }
 
-function loop() {
+function loop(minNeighbors, maxNeighbors, reproduction, minFood, minInfection, foodPerTurn, enemyPerTurn, timing) {
   const interval = setInterval(() => {
     spawnFood(foodPerTurn);
     spawnEnemy(enemyPerTurn);
     drawGrid();
-    updateGrid();
+    updateGrid(minNeighbors, maxNeighbors, reproduction, minFood, minInfection);
     
     if (isGameOver()) {
       clearInterval(interval);
       alert("Game over!");
-      grid = createGrid();
-      loop();
     }
   }, timing);
 }
 
-loop();
+function startGame() {
+  const minNeighbors = parseInt(document.getElementById("minNeighbors").value, 10);
+  const maxNeighbors = parseInt(document.getElementById("maxNeighbors").value, 10);
+  const reproduction = parseInt(document.getElementById("reproduction").value, 10);
+  const minFood = parseInt(document.getElementById("minFood").value, 10);
+  const minInfection = parseInt(document.getElementById("minInfection").value, 10);
+  const foodPerTurn = parseInt(document.getElementById("foodPerTurn").value, 10);
+  const enemyPerTurn = parseInt(document.getElementById("enemyPerTurn").value, 10);
+  const initialSpawn = parseInt(document.getElementById("initialSpawn").value, 10);
+  const timing = parseFloat(document.getElementById("timing").value, 0.5) * 1000;
+
+  grid = createGrid(initialSpawn);
+
+  loop(minNeighbors, maxNeighbors, reproduction, minFood, minInfection, foodPerTurn, enemyPerTurn, timing);
+}
