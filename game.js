@@ -56,6 +56,8 @@ function updateGrid(minNeighbors, maxNeighbors, reproduction, minFood, minInfect
         } else if (neighbors.length < minNeighbors || neighbors.length > maxNeighbors) {
           newGrid[y][x] = 0; // Morre por solidão ou superpopulação
         }
+      } else if (grid[y][x] === 2) {
+        newGrid[y][x] = 0; // Comida desaparece
       } else if (grid[y][x] === 3) {
         if (neighbors.length > 0 && neighbors.length <= minInfection) {
           neighbors.forEach((n) => {
