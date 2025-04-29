@@ -54,26 +54,26 @@
   <h1>Game of Life</h1>
 
   <div class="controls">
-    <label for="minNeighbors">Mínimo de Vizinhos para Sobreviver:</label>
-    <input type="number" id="minNeighbors" value="3" min="0" />
+    <label for="minNeighbors">Mínimo de vizinhos para sobreviver a solidão:</label>
+    <input type="number" id="minNeighbors" value="3" min="1" max="8" />
 
-    <label for="maxNeighbors">Máximo de Vizinhos antes de Morrer:</label>
-    <input type="number" id="maxNeighbors" value="8" min="0" />
+    <label for="maxNeighbors">Máximo de vizinhos para morrer de superlotação:</label>
+    <input type="number" id="maxNeighbors" value="8" min="1" max="8" />
 
-    <label for="reproduction">Vizinhos para Reproduzir:</label>
-    <input type="number" id="reproduction" value="3" min="0" />
+    <label for="reproduction">Quantidade de vizinhos para reproduzir:</label>
+    <input type="number" id="reproduction" value="3" min="1" max="8" />
 
-    <label for="minFood">Mínimo de Comida para Sobrevivência:</label>
-    <input type="number" id="minFood" value="1" min="0" />
+    <label for="minFood">Mínimo de comida para sobrevivência:</label>
+    <input type="number" id="minFood" value="1" min="1" max="8" />
 
-    <label for="minInfection">Vizinhos para Sobreviver à Infecção:</label>
-    <input type="number" id="minInfection" value="3" min="0" />
+    <label for="minInfection">Mínimo de vizinhos para sobreviver à infecção:</label>
+    <input type="number" id="minInfection" value="3" min="1" max="8" />
 
-    <label for="foodPerTurn">Comida por Turno:</label>
-    <input type="number" id="foodPerTurn" value="2" min="0" />
+    <label for="foodPerTurn">Comida por turno:</label>
+    <input type="number" id="foodPerTurn" value="2" min="1" />
 
-    <label for="enemyPerTurn">Inimigos por Turno:</label>
-    <input type="number" id="enemyPerTurn" value="5" min="0" />
+    <label for="enemyPerTurn">Inimigos por turno:</label>
+    <input type="number" id="enemyPerTurn" value="5" min="1" />
 
     <label for="initialSpawn">Inicialização:</label>
     <select id="initialSpawn">
@@ -82,7 +82,7 @@
       <option value="4">Vida, Comida e Inimigos</option>
     </select>
 
-    <label for="timing">Tempo entre Atualizações (s):</label>
+    <label for="timing">Tempo entre atualizações (s):</label>
     <input type="number" id="timing" value="1" min="0.1" step=".1" />
 
     <button onclick="startGame()">Iniciar Jogo</button>
